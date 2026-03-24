@@ -1,0 +1,66 @@
+2026-03-24 19:24:56,393  INFO      Found 26 asset(s) to process.
+2026-03-24 19:24:56,394  ERROR     trimesh is required. Install with: pip install trimesh
+2026-03-24 19:24:56,394  ERROR     trimesh is required. Install with: pip install trimesh
+2026-03-24 19:24:56,395  ERROR     trimesh is required. Install with: pip install trimesh
+2026-03-24 19:24:56,395  ERROR     trimesh is required. Install with: pip install trimesh
+2026-03-24 19:24:56,395  ERROR     trimesh is required. Install with: pip install trimesh
+2026-03-24 19:24:56,396  ERROR     trimesh is required. Install with: pip install trimesh
+2026-03-24 19:24:56,397  ERROR     trimesh is required. Install with: pip install trimesh
+2026-03-24 19:24:56,397  ERROR     trimesh is required. Install with: pip install trimesh
+2026-03-24 19:24:56,397  ERROR     trimesh is required. Install with: pip install trimesh
+2026-03-24 19:24:56,398  ERROR     trimesh is required. Install with: pip install trimesh
+2026-03-24 19:24:56,398  ERROR     trimesh is required. Install with: pip install trimesh
+2026-03-24 19:24:56,398  ERROR     trimesh is required. Install with: pip install trimesh
+2026-03-24 19:24:56,399  ERROR     trimesh is required. Install with: pip install trimesh
+2026-03-24 19:24:56,399  ERROR     trimesh is required. Install with: pip install trimesh
+2026-03-24 19:24:56,399  ERROR     trimesh is required. Install with: pip install trimesh
+2026-03-24 19:24:56,400  ERROR     trimesh is required. Install with: pip install trimesh
+2026-03-24 19:24:56,400  ERROR     trimesh is required. Install with: pip install trimesh
+2026-03-24 19:24:56,401  ERROR     trimesh is required. Install with: pip install trimesh
+2026-03-24 19:24:56,401  ERROR     trimesh is required. Install with: pip install trimesh
+2026-03-24 19:24:56,401  ERROR     trimesh is required. Install with: pip install trimesh
+2026-03-24 19:24:56,402  ERROR     trimesh is required. Install with: pip install trimesh
+2026-03-24 19:24:56,402  ERROR     trimesh is required. Install with: pip install trimesh
+2026-03-24 19:24:56,402  ERROR     trimesh is required. Install with: pip install trimesh
+2026-03-24 19:24:56,402  ERROR     trimesh is required. Install with: pip install trimesh
+2026-03-24 19:24:56,403  ERROR     trimesh is required. Install with: pip install trimesh
+2026-03-24 19:24:56,403  ERROR     trimesh is required. Install with: pip install trimesh
+2026-03-24 19:24:56,403  WARNING   No features extracted. Check asset files and dependencies.
+2026-03-24 19:25:57,242  INFO      Found 26 asset(s) to process.
+2026-03-24 19:25:57,242  INFO      Processing: scene.gltf
+2026-03-24 19:26:01,331  INFO      Processing: untitled.fbx
+2026-03-24 19:26:01,726  WARNING     [SKIP] Failed to load untitled.fbx: file_type 'fbx' not supported
+2026-03-24 19:26:01,727  INFO      Processing: scene.gltf
+2026-03-24 19:26:07,183  INFO      Processing: scene.gltf
+2026-03-24 19:26:07,807  INFO      Processing: scene.gltf
+2026-03-24 19:26:08,641  INFO      Processing: scene.gltf
+2026-03-24 19:26:12,286  INFO      Processing: scene.gltf
+2026-03-24 19:26:12,935  INFO      Processing: dae_diorama_-_forest_loner.glb
+2026-03-24 19:26:17,077  INFO      Processing: scene.gltf
+2026-03-24 19:26:17,707  INFO      Processing: scene.gltf
+2026-03-24 19:26:20,630  INFO      Processing: scene.gltf
+2026-03-24 19:26:20,706  INFO      Processing: scene.gltf
+2026-03-24 19:26:26,265  INFO      Processing: scene.gltf
+2026-03-24 19:26:27,288  INFO      Processing: scene.gltf
+2026-03-24 19:26:31,126  INFO      Processing: scene.gltf
+2026-03-24 19:26:35,506  INFO      Processing: scene.gltf
+2026-03-24 19:26:35,958  INFO      Processing: Mutant animal talk.glb
+2026-03-24 19:26:36,252  INFO      Processing: scene.gltf
+2026-03-24 19:26:36,325  INFO      Processing: scene.gltf
+2026-03-24 19:26:37,196  INFO      Processing: scene.gltf
+2026-03-24 19:26:38,263  INFO      Processing: scene.gltf
+2026-03-24 19:26:38,400  INFO      Processing: scene.gltf
+2026-03-24 19:26:50,167  INFO      Processing: scene.gltf
+2026-03-24 19:26:57,029  INFO      Processing: Sýkorka.fbx
+2026-03-24 19:26:57,071  WARNING     [SKIP] Failed to load Sýkorka.fbx: file_type 'fbx' not supported
+2026-03-24 19:26:57,072  INFO      Processing: scene.gltf
+2026-03-24 19:26:57,552  INFO      Processing: scene.gltf
+2026-03-24 19:26:58,138  INFO      Extracted : 24 assets
+2026-03-24 19:26:58,138  INFO      Failed    : 0 assets
+2026-03-24 19:26:58,139  INFO      Output    : C:\Users\USER PC\Downloads\demo\features.csv
+2026-03-24 19:26:58,140  INFO      Columns   : 31
+2026-03-24 19:26:58,145  INFO      Complexity distribution:
+2026-03-24 19:26:58,148  INFO        high      : 10 assets
+2026-03-24 19:26:58,149  INFO        mid       : 10 assets
+2026-03-24 19:26:58,149  INFO        low       : 3 assets
+2026-03-24 19:26:58,150  INFO        extreme   : 1 assets
