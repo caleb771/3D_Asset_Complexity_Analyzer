@@ -1,1 +1,273 @@
+# 3D Asset Complexity Analyzer
+### Mesh Statistics and Rendering Performance Prediction
 
+> A machine learning pipeline that extracts structural features from 3D assets, benchmarks their rendering performance in Blender, and trains predictive models to forecast render time from mesh complexity metrics.
+
+---
+
+## Overview
+
+This project addresses a core challenge in 3D production pipelines: **predicting how long an asset will take to render before it enters the queue.** By extracting quantifiable mesh statistics — polygon count, texture memory, material complexity, UV maps — and correlating them with measured render times, we train regression and classification models that can estimate rendering cost from asset structure alone.
+
+The tool provides:
+- Automated feature extraction from GLTF, GLB, FBX, OBJ, and PLY files
+- Blender-based render time benchmarking under standardized settings
+- Machine learning models for regression (render time prediction), classification (complexity tier), and clustering (asset grouping)
+- Interactive analytics dashboards showing trade-offs between mesh fidelity and performance
+
+---
+
+## Project Structure
+
+```
+3d-asset-complexity-analyzer/
+│
+├── data/
+│   ├── demo/                        # Raw 3D asset folders (GLTF/GLB/FBX)
+│   ├── features.csv                 # Extracted mesh statistics
+│   ├── render_times.csv             # Blender render time labels
+│   └── dataset.csv                  # Merged final dataset
+│
+├── scripts/
+│   ├── feature_extractor.py         # Extracts mesh stats from GLTF/GLB/FBX/OBJ/PLY
+│   ├── blender_extractor.py         # Extracts Blender-specific features from .blend files
+│   ├── blender_render_timer.py      # Imports assets into Blender, renders, records time
+│   └── run_pipeline.ps1             # Full automation pipeline (Windows PowerShell)
+│
+├── notebooks/
+│   └── analysis.ipynb               # EDA, ML training, SHAP analysis, dashboards
+│
+├── models/
+│   └── (trained model artifacts)
+│
+├── requirements.txt
+└── README.md
+```
+
+---
+
+## Quickstart
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/yourusername/3d-asset-complexity-analyzer.git
+cd 3d-asset-complexity-analyzer
+```
+
+### 2. Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 3. Add your 3D assets
+
+Place asset folders inside `data/demo/`. Each asset should follow the standard Sketchfab structure:
+
+```
+data/demo/
+    my_asset/
+        scene.gltf
+        scene.bin
+        textures/
+            diffuse.png
+            normal.png
+```
+
+### 4. Run the full pipeline (Windows)
+
+```powershell
+PowerShell -ExecutionPolicy Bypass -File scripts/run_pipeline.ps1
+```
+
+This will:
+- Extract mesh features from all assets → `data/features.csv`
+- Render each asset in Blender and record time → `data/render_times.csv`
+- Merge into a single labeled dataset → `data/dataset.csv`
+
+### 5. Run the notebook
+
+Open `notebooks/analysis.ipynb` in Jupyter or VS Code to train models and explore results.
+
+---
+
+## Feature Extraction
+
+`feature_extractor.py` processes GLTF, GLB, FBX, OBJ, and PLY files using `trimesh` and `Pillow`.
+
+**Extracted features:**
+
+| Category | Features |
+|---|---|
+| Geometry | `vertex_count`, `face_count`, `edge_count`, `surface_area`, `bounding_box_volume` |
+| Density | `vertex_density`, `polygon_density`, `bbox_x`, `bbox_y`, `bbox_z` |
+| Topology | `is_watertight`, `is_winding_consistent`, `euler_number`, `duplicate_faces`, `degenerate_faces` |
+| Textures | `texture_count`, `total_texture_pixels`, `total_texture_memory_mb`, `max_texture_width`, `max_texture_height`, `has_normal_map`, `has_displacement_map` |
+| Materials | `material_count` |
+| File | `file_name`, `file_format`, `file_size_mb` |
+| Label | `complexity_tier` (low / mid / high / extreme) |
+
+**Run manually on a folder:**
+
+```bash
+python scripts/feature_extractor.py \
+  --input data/demo \
+  --output data/features.csv \
+  --recursive \
+  --summary
+```
+
+**Run on a single file:**
+
+```bash
+python scripts/feature_extractor.py \
+  --input data/demo/911/scene.gltf \
+  --output data/features.csv
+```
+
+---
+
+## Blender Render Timing
+
+`blender_render_timer.py` is called by the pipeline for each asset. It opens Blender headlessly, imports the asset, enforces standardized render settings, renders one frame, and records the wall-clock time.
+
+**Fixed render settings applied to every asset:**
+
+| Setting | Value |
+|---|---|
+| Engine | Cycles |
+| Device | CPU |
+| Samples | 128 |
+| Max bounces | 12 |
+| Denoising | On |
+| Resolution | 1920 × 1080 |
+
+> All assets must be rendered on the **same machine** under the same settings. Render time labels are hardware-specific — a model trained on one machine's measurements will predict times for that machine only.
+
+**Run manually on one asset:**
+
+```bash
+blender --background --python scripts/blender_render_timer.py \
+  -- --input data/demo/911/scene.gltf --output data/render_times.csv
+```
+
+---
+
+## Machine Learning Models
+
+Three families of models are trained and evaluated:
+
+**Regression** — predicts continuous render time (seconds)
+- Linear Regression (interpretable baseline)
+- Random Forest Regressor
+- XGBoost (primary model)
+
+**Classification** — predicts complexity tier (low / mid / high / extreme)
+- Logistic Regression
+- Decision Tree
+- Support Vector Machine (SVM)
+
+**Clustering & Dimensionality Reduction** — discovers natural asset groupings
+- K-Means Clustering
+- PCA (2D and 3D visualization)
+
+**Optional — Graph Neural Networks**
+- PyTorch Geometric GNN treating mesh as vertex/edge graph
+- Captures structural topology beyond scalar statistics
+
+**Evaluation metrics:**
+- Regression: MAE, RMSE, MAPE, R²
+- Classification: Accuracy, F1-score, confusion matrix
+- Explainability: SHAP feature importance plots
+
+---
+
+## Complexity Tiers
+
+| Tier | Face Count |
+|---|---|
+| Low | < 10,000 |
+| Mid | 10,000 – 100,000 |
+| High | 100,000 – 1,000,000 |
+| Extreme | > 1,000,000 |
+
+---
+
+## Dataset Sources
+
+Assets collected from:
+- [Sketchfab](https://sketchfab.com/features/free-3d-models) — CC0 and CC-BY licensed models
+- [ShapeNet](https://shapenet.org) — large-scale categorized 3D model repository
+- [Poly Haven](https://polyhaven.com/models) — CC0 production-quality assets
+- [Blender Studio Open Movies](https://studio.blender.org/films) — production-grade `.blend` scenes
+- [PBRT v4 Scenes](https://github.com/mmp/pbrt-v4-scenes) — path-tracer benchmark scenes
+- [Stanford 3D Scanning Repository](https://graphics.stanford.edu/data/3Dscanrep) — classic research meshes
+
+---
+
+## Requirements
+
+```
+trimesh
+numpy
+pandas
+Pillow
+tqdm
+scikit-learn
+xgboost
+lightgbm
+shap
+matplotlib
+seaborn
+plotly
+jupyter
+```
+
+Install all at once:
+
+```bash
+pip install -r requirements.txt
+```
+
+**Additional requirements:**
+- [Blender 4.x](https://www.blender.org/download/) — for render time benchmarking (free)
+- Python 3.10+ recommended
+
+---
+
+## Limitations
+
+- Render time labels are **machine-specific** — predictions are valid only for the hardware used during benchmarking
+- Blender Cycles CPU rendering is used for consistency; GPU rendering would produce different (faster) times
+- Dataset size is limited by available assets and render time — larger datasets improve model accuracy
+- `.rar` and `.zip` compressed assets must be manually extracted before processing
+
+---
+
+## Future Work
+
+- Extend to GPU render time prediction with hardware spec features
+- Add Unreal Engine 5 FPS benchmarking for real-time performance prediction
+- Generalize across machines by normalizing render time against a hardware benchmark score
+- Graph Neural Network branch for structural mesh topology analysis
+- Web-based dashboard for drag-and-drop asset analysis
+
+---
+
+## Academic Context
+
+This project is submitted as a Final Year Project in partial fulfilment of the requirements of a BSc in Data Science and Analytics.
+
+**Key references:**
+- Garland & Heckbert (1997) — Surface Simplification Using Quadric Error Metrics
+- Chen & Guestrin (2016) — XGBoost: A Scalable Tree Boosting System
+- Qi et al. (2017) — PointNet: Deep Learning on Point Sets
+- Hanocka et al. (2019) — MeshCNN: A Network with an Edge
+- Chang et al. (2015) — ShapeNet: An Information-Rich 3D Model Repository
+
+---
+
+## License
+
+This project is for academic use. Individual 3D assets retain their original licenses (CC0, CC-BY) as attributed in their respective `license.txt` files.
