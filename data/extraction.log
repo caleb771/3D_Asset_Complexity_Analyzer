@@ -51,8 +51,8 @@
 2026-03-24 19:26:38,263  INFO      Processing: scene.gltf
 2026-03-24 19:26:38,400  INFO      Processing: scene.gltf
 2026-03-24 19:26:50,167  INFO      Processing: scene.gltf
-2026-03-24 19:26:57,029  INFO      Processing: Sýkorka.fbx
-2026-03-24 19:26:57,071  WARNING     [SKIP] Failed to load Sýkorka.fbx: file_type 'fbx' not supported
+2026-03-24 19:26:57,029  INFO      Processing: SÃ½korka.fbx
+2026-03-24 19:26:57,071  WARNING     [SKIP] Failed to load SÃ½korka.fbx: file_type 'fbx' not supported
 2026-03-24 19:26:57,072  INFO      Processing: scene.gltf
 2026-03-24 19:26:57,552  INFO      Processing: scene.gltf
 2026-03-24 19:26:58,138  INFO      Extracted : 24 assets
